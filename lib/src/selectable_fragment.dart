@@ -114,6 +114,7 @@ class SelectableFragment
     switch (event.type) {
       case SelectionEventType.startEdgeUpdate:
       case SelectionEventType.endEdgeUpdate:
+      case SelectionEventType.selectParagraph:
         final edgeUpdate = event as SelectionEdgeUpdateEvent;
         final granularity = event.granularity;
 
@@ -126,6 +127,7 @@ class SelectableFragment
                 isEnd: edgeUpdate.type == SelectionEventType.endEdgeUpdate);
           case TextGranularity.document:
           case TextGranularity.line:
+          case TextGranularity.paragraph:
             assert(
                 false,
                 'Moving the selection edge by line or '
@@ -656,6 +658,7 @@ class SelectableFragment
         result = SelectionResult.end;
         break;
       case TextGranularity.line:
+      case TextGranularity.paragraph:
         newPosition = _moveToTextBoundaryAtDirection(
             targetedEdge, forward, LineBoundary(this));
         result = SelectionResult.end;
